@@ -1,0 +1,78 @@
+# tutorial_services_docker/docker-compose.yml
+
+services:
+  event_submission_service:
+    build:
+      context: .
+      dockerfile: event_submission_service/Dockerfile
+    container_name: event_submission_service
+    ports:
+      - "5005:5005"
+    volumes:
+      - event_data:/app
+    working_dir: /app
+    stop_signal: SIGINT
+    restart: unless-stopped
+
+  event_approval_service:
+    build:
+      context: .
+      dockerfile: event_approval_service/Dockerfile
+    container_name: event_approval_service
+    ports:
+      - "5006:5006"
+    volumes:
+      - event_data:/app
+    working_dir: /app
+    stop_signal: SIGINT
+    restart: unless-stopped
+    depends_on:
+      - event_submission_service
+
+  event_status_service:
+    build:
+      context: .
+      dockerfile: event_status_service/Dockerfile
+    container_name: event_status_service
+    ports:
+      - "5007:5007"
+    volumes:
+      - event_data:/app
+    working_dir: /app
+    stop_signal: SIGINT
+    restart: unless-stopped
+    depends_on:
+      - event_submission_service
+      - event_approval_service
+      - room_booking_status_service
+
+  approved_event_notifier_service:
+    build:
+      context: .
+      dockerfile: approved_event_notifier_service/Dockerfile
+    container_name: approved_event_notifier_service
+    ports:
+      - "5008:5008"
+    volumes:
+      - event_data:/app
+    working_dir: /app
+    stop_signal: SIGINT
+    restart: unless-stopped
+    depends_on:
+      - event_approval_service
+
+  room_booking_status_service:
+    build:
+      context: .
+      dockerfile: room_booking_status_service/Dockerfile
+    container_name: room_booking_status_service
+    ports:
+      - "5009:5009"
+    volumes:
+      - event_data:/app
+    working_dir: /app
+    stop_signal: SIGINT
+    restart: unless-stopped
+
+volumes:
+  event_data:
