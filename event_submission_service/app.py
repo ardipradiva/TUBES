@@ -40,6 +40,8 @@ def init_db():
 
 @app.route('/events', methods=['POST'])
 def submit_event():
+    print("Request received")
+    print(request.get_json(force=True))  # paksa parsing dan debug
     if not request.is_json:
         return jsonify({"error": "Request must be JSON"}), 400
     data = request.get_json()
@@ -72,4 +74,4 @@ def submit_event():
 
 if __name__ == '__main__':
     init_db()
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=5005, debug=True)

@@ -82,5 +82,5 @@ def approve_event(event_id):
 # --- Menjalankan Aplikasi ---
 if __name__ == '__main__':
     init_db() # Inisialisasi DB saat start
-    # Explain: Port 5002 untuk layanan produk.
-    app.run(host='0.0.0.0', port=5002, debug=True)
+    # Explain: Port 5006 untuk layanan produk.
+    app.run(host='0.0.0.0', port=5006, debug=True)

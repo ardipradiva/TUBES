@@ -92,5 +92,5 @@ def get_event_status(event_id):
 if __name__ == '__main__':
     init_db() # Inisialisasi DB saat start
     # Explain: host='0.0.0.0' agar bisa diakses dari layanan lain di mesin yang sama.
-    #          Port 5001 untuk layanan pengguna.
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    #          Port 5007 untuk layanan pengguna.
+    app.run(host='0.0.0.0', port=5007, debug=True)
