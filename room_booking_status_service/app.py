@@ -2,8 +2,10 @@ import sqlite3
 import os
 import contextlib
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 DB_NAME = "event_data.db"
 DB_PATH = os.path.join(os.path.dirname(__file__), DB_NAME)
 

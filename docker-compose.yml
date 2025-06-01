@@ -74,5 +74,21 @@ services:
     stop_signal: SIGINT
     restart: unless-stopped
 
+  graphql_gateway_service:
+    build:
+      context: ./graphql_gateway_service
+      dockerfile: Dockerfile
+    container_name: graphql_gateway_service
+    ports:
+      - "5010:5010"
+    working_dir: /app
+    stop_signal: SIGINT
+    restart: unless-stopped
+    depends_on:
+      - event_submission_service
+      - event_approval_service
+      - event_status_service
+      - room_booking_status_service
+
 volumes:
   event_data:
